@@ -1,0 +1,2 @@
+# party-radar
+See wiki.
