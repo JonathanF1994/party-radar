@@ -1,5 +1,7 @@
 package pure_software.de.party_radar;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,8 +11,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import pure_software.de.party_radar.services.actions.DatabaseAction;
+import pure_software.de.party_radar.services.contracts.PersonalInformationContract;
+import pure_software.de.party_radar.services.db_helper.PersonalInformationDbHelper;
 
+public class MainActivity extends AppCompatActivity {
+    DatabaseAction databaseAction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,5 +54,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void checkDetails(View view) {
+        databaseAction = new DatabaseAction();
+        databaseAction.writePersonalInformation("Jonathan", "Fuchs", "JeyFox", 21, 0, false, false);
     }
 }
