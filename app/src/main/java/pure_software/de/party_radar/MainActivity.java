@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void checkDetails(View view) {
         databaseAction = new DatabaseAction();
         databaseAction.writePersonalInformation("Jonathan", "Fuchs", "JeyFox", 21, 0, false, false);
