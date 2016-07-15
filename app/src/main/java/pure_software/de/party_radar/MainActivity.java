@@ -1,22 +1,25 @@
 package pure_software.de.party_radar;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import pure_software.de.party_radar.services.actions.DatabaseAction;
-import pure_software.de.party_radar.services.contracts.PersonalInformationContract;
-import pure_software.de.party_radar.services.db_helper.PersonalInformationDbHelper;
+import pure_software.de.party_radar.memo.UserMemo;
+import pure_software.de.party_radar.datasource.UserDataSource;
+
 
 public class MainActivity extends AppCompatActivity {
-    DatabaseAction databaseAction;
+
+    public static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private UserDataSource dataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
     }
 
     @Override
@@ -58,7 +63,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void checkDetails(View view) {
-        databaseAction = new DatabaseAction();
-        databaseAction.writePersonalInformation("Jonathan", "Fuchs", "JeyFox", 21, 0, false, false);
+        UserMemo userMemo = new UserMemo(21, 0, 0, "Fuchs", 0001, 0, "Jonathan", "JeyFox");
+        Log.d(LOG_TAG, "Inhalt der UserMemo " + userMemo.getName() + " " + userMemo.getPrename() + " " + userMemo.getAge());
+        dataSource = new UserDataSource(this);
+
+        Log.i("Information: ", Environment.getDataDirectory().toString());
+        Log.d(LOG_TAG, "Die Datenquelle wird geöffnet!");
+        dataSource.open();
+
+        Log.d(LOG_TAG, "Die Datenquelle wird geschlossen");
+        dataSource.close();
     }
 }
